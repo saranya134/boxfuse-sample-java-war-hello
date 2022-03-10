@@ -1,5 +1,5 @@
 version: 0.0
 os: ubuntu
 files:
-  - source: target/hello-2.0.war
+  - source: /target/hello-2.0.war
     destination: /opt/tomcat/latest/webapps
