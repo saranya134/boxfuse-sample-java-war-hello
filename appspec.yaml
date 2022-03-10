@@ -1,0 +1,5 @@
+version: 0.0
+os: ubuntu
+files:
+  - source: /home/vsts/work/1/s/target/hello-2.0.war
+    destination: /opt/tomcat/latest/webapps
