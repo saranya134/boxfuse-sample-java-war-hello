@@ -22,7 +22,7 @@ steps:
     checkStyleRunAnalysis: true
     pmdRunAnalysis: true
     findBugsRunAnalysis: true
-  enabled: false
+    enabled: false
 
 - script: |
    pwd
