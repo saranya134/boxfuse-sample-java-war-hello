@@ -22,7 +22,6 @@ stages:
         checkStyleRunAnalysis: true
         pmdRunAnalysis: true
         findBugsRunAnalysis: true
-
 - script: |
    pwd
    cd /home/vsts/work/1/s/target
