@@ -46,10 +46,10 @@ stages:
   jobs:
   - job: Test
     displayName: 'Test'
-  steps:
-  - task: DownloadPipelineArtifact@2
-    displayName: 'Download Pipeline Artifact'
-    inputs:
+ steps:
+ - task: DownloadPipelineArtifact@2
+   displayName: 'Download Pipeline Artifact'
+   inputs:
       buildType: specific
       project: '71ed9c42-d7f2-4383-a13b-c3bb8c6d590a'
       definition: 12
