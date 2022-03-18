@@ -46,17 +46,17 @@ stages:
   jobs:
   - job: Test
     displayName: 'Test'
-  steps:
-  - task: DownloadPipelineArtifact@2
-    displayName: 'Download Pipeline Artifact'
-    inputs:
-      buildType: specific
-      project: '71ed9c42-d7f2-4383-a13b-c3bb8c6d590a'
-      definition: 12
-      specificBuildWithTriggering: true
-      buildVersionToDownload: specific
-      pipelineId: 144
-      artifactName: Artifact
+    steps:
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download Pipeline Artifact'
+      inputs:
+        buildType: specific
+        project: '71ed9c42-d7f2-4383-a13b-c3bb8c6d590a'
+        definition: 12
+        specificBuildWithTriggering: true
+        buildVersionToDownload: specific
+        pipelineId: 144
+        artifactName: Artifact
   - task: AmazonWebServices.aws-vsts-tools.CodeDeployDeployApplication.CodeDeployDeployApplication@1
     displayName: 'Deploy with CodeDeploy: Azuredemo'
     inputs:
