@@ -47,9 +47,6 @@ stages:
   - job: Test
     displayName: 'Test'
   steps:
-     #- script: |
-     #  pwd
-      # ls -lrt
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Pipeline Artifact'
     inputs:
