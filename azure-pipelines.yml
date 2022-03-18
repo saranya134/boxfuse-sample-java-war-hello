@@ -5,18 +5,73 @@
 
 trigger:
 - master
-
+stages:
+- stage: build
+  displayName: 'Build'
+  jobs:
+  - job: build_test
+    displayName: 'Build and test'
 pool:
+  name: Azure Pipelines
   vmImage: ubuntu-latest
 
 steps:
 - task: Maven@3
+  displayName: 'Maven pom.xml'
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'clean compile package'
+    checkStyleRunAnalysis: true
+    pmdRunAnalysis: true
+    findBugsRunAnalysis: true
+  enabled: false
+
+- script: |
+   pwd
+   cd /home/vsts/work/1/s/target
+   ls -lrt
+   cp /home/vsts/work/1/s/appspec.yml ../target/
+   mkdir azure
+   cp hello-2.0.war azure/
+   cp appspec.yml azure/;ls -lrt
+   
+   tar -cvf azure_code.tar azure
+   ls -lrt
+  displayName: 'Command Line Script'
+  enabled: false
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    artifact: Artifact
+  enabled: false
+  
+- stage: Test
+  displayName: 'Test'
+  dependsOn: build
+  jobs:
+  - job: Test
+    displayName: 'Test'
+    steps:
+     #- script: |
+     #  pwd
+      # ls -lrt
+- task: DownloadPipelineArtifact@2
+  displayName: 'Download Pipeline Artifact'
+  inputs:
+    buildType: specific
+    project: '71ed9c42-d7f2-4383-a13b-c3bb8c6d590a'
+    definition: 12
+    specificBuildWithTriggering: true
+    buildVersionToDownload: specific
+    pipelineId: 144
+    artifactName: Artifact
+- task: AmazonWebServices.aws-vsts-tools.CodeDeployDeployApplication.CodeDeployDeployApplication@1
+  displayName: 'Deploy with CodeDeploy: Azuredemo'
+  inputs:
+    awsCredentials: cicd
+    regionName: 'eu-central-1'
+    applicationName: Azuredemo
+    deploymentGroupName: 'azure-dev'
+    revisionBundle: '$(System.DefaultWorkingDirectory)/_SaranyaN-CI/Artifact/s/target/azure_code.tar'
+    bucketName: azuredemo
+    fileExistsBehavior: RETAIN
+
