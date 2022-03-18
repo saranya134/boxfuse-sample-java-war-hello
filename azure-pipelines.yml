@@ -34,11 +34,11 @@ stages:
        ls -lrt
       displayName: 'Command Line Script'
       enabled: false
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Pipeline Artifact'
-  inputs:
-    artifact: Artifact
-  enabled: false
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact'
+      inputs:
+        artifact: Artifact
+        enabled: false
   
 - stage: Test
   displayName: 'Test'
