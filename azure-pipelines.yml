@@ -46,28 +46,28 @@ stages:
   jobs:
   - job: Test
     displayName: 'Test'
-    steps:
+  steps:
      #- script: |
      #  pwd
       # ls -lrt
-- task: DownloadPipelineArtifact@2
-  displayName: 'Download Pipeline Artifact'
-  inputs:
-    buildType: specific
-    project: '71ed9c42-d7f2-4383-a13b-c3bb8c6d590a'
-    definition: 12
-    specificBuildWithTriggering: true
-    buildVersionToDownload: specific
-    pipelineId: 144
-    artifactName: Artifact
-- task: AmazonWebServices.aws-vsts-tools.CodeDeployDeployApplication.CodeDeployDeployApplication@1
-  displayName: 'Deploy with CodeDeploy: Azuredemo'
-  inputs:
-    awsCredentials: cicd
-    regionName: 'eu-central-1'
-    applicationName: Azuredemo
-    deploymentGroupName: 'azure-dev'
-    revisionBundle: '$(System.DefaultWorkingDirectory)/_SaranyaN-CI/Artifact/s/target/azure_code.tar'
-    bucketName: azuredemo
-    fileExistsBehavior: RETAIN
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download Pipeline Artifact'
+    inputs:
+      buildType: specific
+      project: '71ed9c42-d7f2-4383-a13b-c3bb8c6d590a'
+      definition: 12
+      specificBuildWithTriggering: true
+      buildVersionToDownload: specific
+      pipelineId: 144
+      artifactName: Artifact
+  - task: AmazonWebServices.aws-vsts-tools.CodeDeployDeployApplication.CodeDeployDeployApplication@1
+    displayName: 'Deploy with CodeDeploy: Azuredemo'
+    inputs:
+      awsCredentials: cicd
+      regionName: 'eu-central-1'
+      applicationName: Azuredemo
+      deploymentGroupName: 'azure-dev'
+      revisionBundle: '$(System.DefaultWorkingDirectory)/_SaranyaN-CI/Artifact/s/target/azure_code.tar'
+      bucketName: azuredemo
+      fileExistsBehavior: RETAIN
 
