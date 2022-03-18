@@ -3,26 +3,25 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-trigger:
-- master
 stages:
 - stage: build
   displayName: 'Build'
   jobs:
   - job: build_test
     displayName: 'Build and test'
-pool:
-  name: Azure Pipelines
-  vmImage: ubuntu-latest
-steps:
-- task: Maven@3
-  displayName: 'Maven pom.xml'
-  inputs:
-    goals: 'clean compile package'
-    checkStyleRunAnalysis: true
-    pmdRunAnalysis: true
-    findBugsRunAnalysis: true
-    enabled: false
+    pool:
+      name: Azure Pipelines
+      demands:
+      - maven
+      - java
+    steps:
+    - task: Maven@3
+      displayName: 'Maven pom.xml'
+      inputs:
+        goals: 'clean compile package'
+        checkStyleRunAnalysis: true
+        pmdRunAnalysis: true
+        findBugsRunAnalysis: true
 
 - script: |
    pwd
