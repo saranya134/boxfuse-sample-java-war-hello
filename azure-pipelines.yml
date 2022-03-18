@@ -22,19 +22,18 @@ stages:
         checkStyleRunAnalysis: true
         pmdRunAnalysis: true
         findBugsRunAnalysis: true
-- script: |
-   pwd
-   cd /home/vsts/work/1/s/target
-   ls -lrt
-   cp /home/vsts/work/1/s/appspec.yml ../target/
-   mkdir azure
-   cp hello-2.0.war azure/
-   cp appspec.yml azure/;ls -lrt
-   
-   tar -cvf azure_code.tar azure
-   ls -lrt
-  displayName: 'Command Line Script'
-  enabled: false
+    - script: |
+       pwd
+       cd /home/vsts/work/1/s/target
+       ls -lrt
+       cp /home/vsts/work/1/s/appspec.yml ../target/
+       mkdir azure
+       cp hello-2.0.war azure/
+       cp appspec.yml azure/;ls -lrt
+       tar -cvf azure_code.tar azure
+       ls -lrt
+      displayName: 'Command Line Script'
+      enabled: false
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
